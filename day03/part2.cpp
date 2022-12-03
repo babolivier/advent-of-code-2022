@@ -5,11 +5,11 @@ using namespace std;
 
 int main() {
     // Number of members in a group.
-    const int NB_MEMBERS_IN_GROUP = 3;
+    static constexpr size_t NB_MEMBERS_IN_GROUP = 3;
     // The amount of members we need to keep in a buffer (which in this case is an array of the given size)
     // in order to be able to process the whole group when we reach its last member. This is 1 less than
     // the number of members in the group, since we look at the array when we process the last member.
-    const int NB_MEMBERS_IN_BUFFER = NB_MEMBERS_IN_GROUP - 1;
+    static constexpr size_t NB_MEMBERS_IN_BUFFER = NB_MEMBERS_IN_GROUP - 1;
 
     // Open input and make sure that succeeded.
     fstream input("input", ios::in);
@@ -37,7 +37,7 @@ int main() {
             items_in_group[line_n % NB_MEMBERS_IN_GROUP - 1] = line;
         } else {
             // We're processing the final member of the group.
-            char common_item = -1;
+            optional<char> maybe_common;
             // In the current line, try to find a character that's common with the last two lines we've stored.
             for(auto c : line) {
                 // For each character, test if it can be found in the lines we've stored.
@@ -51,18 +51,20 @@ int main() {
 
                 // If no match was found, continue to the next character, otherwise break out of the loop.
                 if(found) {
-                    common_item = c;
+                    maybe_common.emplace(c);
                     break;
                 }
             }
 
-            if(common_item == -1) {
+            if(!maybe_common) {
                 // If there's no common item, there's an issue with the code or the input, so going any further will
                 // only produce a wrong result.
                 cerr << "No common item at line " << line_n << '\n';
                 return 1;
             }
 
+            // Now we know for sure there's a common item.
+            char common_item = maybe_common.value();
             // Figure out the priority of the common item.
             int priority;
             if('a' <= common_item && common_item <= 'z') {

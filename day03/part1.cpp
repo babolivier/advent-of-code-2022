@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <optional>
 #include <string>
 using namespace std;
 
@@ -27,21 +28,23 @@ int main() {
         string compartment2(line.begin() + middle, line.end());
 
         // Find the common character in each compartment.
-        char duplicate = -1;
+        optional<char> maybe_duplicate;
         for(auto c : compartment1) {
             size_t found = compartment2.find(c);
             if(found != string::npos) {
-                duplicate = c;
+                maybe_duplicate.emplace(c);
             }
         }
 
-        if(duplicate == -1) {
+        if(!maybe_duplicate) {
             // If there's no duplicate item, there's an issue with the code or the input, so going any further will
             // only produce a wrong result.
             cerr << "No duplicate item at line " << line_n << '\n';
             return 1;
         }
 
+        // Now we know for sure there's a duplicate.
+        char duplicate = maybe_duplicate.value();
         // Figure out the priority of the duplicate item.
         int priority;
         if('a' <= duplicate && duplicate <= 'z') {

@@ -23,13 +23,13 @@ int main() {
     const int LOSS_SCORE = 0;
 
     // Amount of points given for each shape.
-    map<char, int> score_per_shape;
+    unordered_map<char, int> score_per_shape;
     score_per_shape['A'] = 1;
     score_per_shape['B'] = 2;
     score_per_shape['C'] = 3;
 
     // For each play by the opponent, shape to play to win the round.
-    map<char, char> win_outcomes;
+    unordered_map<char, char> win_outcomes;
     // Paper defeats rock.
     win_outcomes['A'] = 'B';
     // Scissors defeats paper.
@@ -41,7 +41,7 @@ int main() {
     // This is an invert map to win_outcomes. We could use pointers to
     // optimise both maps' size, but given we're working with a small
     // static set of key/values, it doesn't feel worth the effort.
-    map<char, char> loss_outcomes;
+    unordered_map<char, char> loss_outcomes;
     loss_outcomes['A'] = 'C';
     loss_outcomes['B'] = 'A';
     loss_outcomes['C'] = 'B';
@@ -57,8 +57,6 @@ int main() {
     string line;
     // The line number. We're keeping track of this in order to log it if something goes wrong.
     int line_n = 0;
-    // The shapes played by the opponent and us, as well as the desired outcome.
-    char opponent_play, my_play, outcome;
     // The total score of every round so far.
     int total_score = 0;
     while(getline(input, line)) {
@@ -72,12 +70,13 @@ int main() {
             return 1;
         }
 
-        // Read the shapes played from the line.
-        opponent_play = line[0];
-        outcome = line[2];
+        // Read the opponent's shape and desired outcome from the line.
+        char opponent_play = line[0];
+        char outcome = line[2];
 
         // Set the outcome score and the shape to play depending on the desired outcome.
         int outcome_score;
+        char my_play;
         switch (outcome) {
             case 'X':
                 outcome_score = LOSS_SCORE;

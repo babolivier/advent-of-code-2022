@@ -18,18 +18,18 @@ Our shapes:
 
 int main() {
     // Amount of points given for each outcome.
-    const int WIN_SCORE = 6;
-    const int DRAW_SCORE = 3;
-    const int LOSS_SCORE = 0;
+    static constexpr int WIN_SCORE = 6;
+    static constexpr int DRAW_SCORE = 3;
+    static constexpr int LOSS_SCORE = 0;
 
     // Amount of points given for each shape.
-    map<char, int> score_per_shape;
+    unordered_map<char, int> score_per_shape;
     score_per_shape['X'] = 1;
     score_per_shape['Y'] = 2;
     score_per_shape['Z'] = 3;
 
     // For each play by the opponent, shape to play to win the round.
-    map<char, char> win_outcomes;
+    unordered_map<char, char> win_outcomes;
     // Paper defeats rock.
     win_outcomes['A'] = 'Y';
     // Scissors defeats paper.
@@ -38,7 +38,7 @@ int main() {
     win_outcomes['C'] = 'X';
 
     // For each play by the opponent, shape to play to draw the round.
-    map<char, char> draw_outcomes;
+    unordered_map<char, char> draw_outcomes;
     // Rock.
     draw_outcomes['A'] = 'X';
     // Paper.
@@ -57,8 +57,6 @@ int main() {
     string line;
     // The line number. We're keeping track of this in order to log it if something goes wrong.
     int line_n = 0;
-    // The shapes played by the opponent and us.
-    char opponent_play, my_play;
     // The total score of every round so far.
     int total_score = 0;
     while(getline(input, line)) {
@@ -72,9 +70,9 @@ int main() {
             return 1;
         }
 
-        // Read the shapes played from the line.
-        opponent_play = line[0];
-        my_play = line[2];
+        // Read the shapes played by the opponents and us from the line.
+        char opponent_play = line[0];
+        char my_play = line[2];
 
         // Figure out the outcome of the round.
         int outcome_score = LOSS_SCORE;

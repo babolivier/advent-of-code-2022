@@ -46,8 +46,8 @@ int main() {
     sort(elfs.begin(), elfs.end(), greater<int>());
 
     // Print out the solution (and a bit more details).
-    cout << "First elf: " << elfs[0] << "\nSecond elf: " << elfs[1] << "\nThird elf: " << elfs[2] << "\n";
-    cout << "Total: " << elfs[0] + elfs[1] + elfs[2] << "\n";
+    cout << "First elf: " << elfs.at(0) << "\nSecond elf: " << elfs.at(1) << "\nThird elf: " << elfs.at(2) << "\n";
+    cout << "Total: " << elfs.at(0) + elfs.at(1) + elfs.at(2) << "\n";
 
     return 0;
 }
