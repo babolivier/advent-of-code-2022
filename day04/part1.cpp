@@ -35,6 +35,11 @@ class Assignment {
 
         // Returns true if the current assignment is a superset of the given one.
         bool is_superset_of(Assignment* a) {
+            // Make sure the pointer we're given isn't NULL.
+            if(a == nullptr) {
+                throw runtime_error("Tried to compare with NULL pointer");
+            }
+
             return (start <= a->start && a->end <= end);
         }
 
@@ -95,9 +100,16 @@ int main() {
             }
         }
 
-        // Check if each assignment is a superset of the other. If so, increment the count of full overlaps.
-        if(assignments[0]->is_superset_of(assignments[1]) || assignments[1]->is_superset_of(assignments[0])) {
-            pairs_overlapping++;
+        try{
+            // Check if each assignment is a superset of the other. If so, increment the count of full overlaps.
+            if(
+                assignments[0]->is_superset_of(assignments[1])
+                || assignments[1]->is_superset_of(assignments[0])
+                ) {
+                pairs_overlapping++;
+            }
+        } catch(const runtime_error& e) {
+            cerr << e.what() << " while processing line " << line_n << endl;
         }
     }
 

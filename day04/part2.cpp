@@ -35,6 +35,11 @@ class Assignment {
 
         // Returns true if the current assignment is a superset of the given one.
         bool is_superset_of(Assignment* a) {
+            // Make sure the pointer we're given isn't NULL.
+            if(a == nullptr) {
+                throw runtime_error("Tried to compare with NULL pointer");
+            }
+
             return (start <= a->start && a->end <= end);
         }
 
@@ -42,12 +47,17 @@ class Assignment {
         // (i.e. one is a superset of the other), or partly (the start or end of one is within
         // the range of the other).
         bool overlaps_with(Assignment *a) {
+            // Make sure the pointer we're given isn't NULL.
+            if(a == nullptr) {
+                throw runtime_error("Tried to compare with NULL pointer");
+            }
+
             return (
                 this->is_superset_of(a)
                 || a->is_superset_of(this)
                 || (start <= a->end && a->end <= end)
                 || (start <= a->start && a->start <= end)
-            );
+                );
         }
         
     private:
@@ -107,9 +117,13 @@ int main() {
             }
         }
 
-        // Check if the assignments overlap. If so, increment the count.
-        if(assignments[0]->overlaps_with(assignments[1])) {
-            pairs_overlapping++;
+        try {
+            // Check if the assignments overlap. If so, increment the count.
+            if(assignments[0]->overlaps_with(assignments[1])) {
+                pairs_overlapping++;
+            }
+        } catch(const runtime_error& e) {
+            cerr << e.what() << " while processing line " << line_n << endl;
         }
     }
 
