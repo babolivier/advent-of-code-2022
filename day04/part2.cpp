@@ -25,7 +25,6 @@ tuple<string, string> split_string_in_two(string s, char delimiter) {
 // The assignment for one elf. Represents the range of section the elf is in charge of.
 class Assignment {
     public:
-
         Assignment(string line_section) {
             // Split the assignment into a start and end, and store them as integers.
             auto [start_s, end_s] = split_string_in_two(line_section, '-');
