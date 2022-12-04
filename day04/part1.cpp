@@ -36,8 +36,8 @@ class Assignment {
             end = stoi(end_s);
         }
 
-        // Returns true if the given assignment is a subset of this one.
-        bool is_subset(Assignment* a) {
+        // Returns true if the current assignment is a superset of the given one.
+        bool is_superset_of(Assignment* a) {
             return (start <= a->start && a->end <= end);
         }
 };
@@ -87,8 +87,8 @@ int main() {
             }
         }
 
-        // Check if each assignment is a subset of the other. If so, increment the count of full overlaps.
-        if(assignments[0]->is_subset(assignments[1]) || assignments[1]->is_subset(assignments[0])) {
+        // Check if each assignment is a superset of the other. If so, increment the count of full overlaps.
+        if(assignments[0]->is_superset_of(assignments[1]) || assignments[1]->is_superset_of(assignments[0])) {
             pairs_overlapping++;
         }
     }
