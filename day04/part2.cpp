@@ -97,6 +97,13 @@ int main() {
                 // We've failed to find a delimiter, which must mean the input is incorrectly formatted.
                 cerr << "No delimiter in assigment #" << i << " of line " << line_n << endl;
                 return 1;
+            } catch(const invalid_argument&) {
+                // We've encountered an unexpected non-numerical character when parsing the range, which
+                // can mean the input is incorrectly formatted, or that we're not splitting the string
+                // correctly.
+                cerr << "Failed to read assigment #" << i << " of line " << line_n << endl;
+                return 1;
+
             }
         }
 
