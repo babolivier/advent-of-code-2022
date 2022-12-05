@@ -41,6 +41,9 @@ int main() {
             // In the current line, try to find a character that's common with the last two lines we've stored.
             for(auto c : line) {
                 // For each character, test if it can be found in the lines we've stored.
+                // Setting the boolean to true before we start iterating is slightly risky here because it can
+                // lead to false results if we've missed something in the logic, but given the simplicity of the
+                // logic and the context of the exercise it should be fine in this instance.
                 bool found = true;
                 for(size_t i = 0; i < NB_MEMBERS_IN_BUFFER; i++) {
                     if(items_in_group[i].find(c) == string::npos) {
