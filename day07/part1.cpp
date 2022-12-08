@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
-#include <map>
 #include <sstream>
 #include <vector>
+#include <unordered_map>
 using namespace std;
 
 // A file in the file system.
@@ -22,8 +22,8 @@ class Dir {
     public:
         string name;
         // The subdirectories and files in the directory.
-        map<string, Dir*> subdirs;
-        map<string, File*> files;
+        unordered_map<string, Dir*> subdirs;
+        unordered_map<string, File*> files;
         // The directory's parent. Null if the directory is the root of
         // the file system.
         Dir* parent;

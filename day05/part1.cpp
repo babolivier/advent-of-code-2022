@@ -1,8 +1,8 @@
 #include <algorithm>
 #include <iostream>
 #include <fstream>
-#include <map>
 #include <sstream>
+#include <unordered_map>
 #include <vector>
 using namespace std;
 
@@ -75,7 +75,7 @@ int main() {
     // know their names.
     vector<vector<string>> crates{};
     // The final map of stack name to content.
-    map<int, vector<string>> crates_per_stack{};
+    unordered_map<int, vector<string>> crates_per_stack{};
     // Whether we've finished reading the initial state of the crates and are ready to start
     // moving them around.
     bool read_crates = false;
